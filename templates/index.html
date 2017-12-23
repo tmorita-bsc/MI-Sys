@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<div class="page">
+  <div class="container">
+  <p class="lead">
+
+    {%if name %}
+      {{ name }} さんの出退勤表
+      <form action="/post" method="post" class="form-inline">
+    {% else %}
+      {{ message }}
+    {% endif %}
+
+    <form action="/post" method="post" class="form-inline">
+      <button type="button" name="submit" value="COMING">出勤</button>
+      <button type="button" name="submit" value="LEAVING">退勤</button>
+    </form>
+
+  </p>
+  </div>
+</div>
+{% endblock %}
