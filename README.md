@@ -1,5 +1,6 @@
 # MI-Sys
 ## tree 構成
+```
 .
 |-- README.md
 |-- app.py
@@ -26,6 +27,7 @@
 `-- templates
     |-- index.html
     `-- layout.html
+```
 
 ## 環境構築
 ```bash:bash
