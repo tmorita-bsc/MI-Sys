@@ -1,5 +1,4 @@
 # MI-Sys
-
 ## tree 構成
 .
 |-- README.md
@@ -28,8 +27,10 @@
     |-- index.html
     `-- layout.html
 
-
-## a
+## 環境構築
+```bash:bash
+$ pip install -r equirement.txt
+```
 - DBはsqlite3 を利用
   - 従業員登録のDB名は'employee.db'、TABLE名は'employees'
   - 従業員勤怠情報のDB名は'atd.db'、TABLE名は'atd'
