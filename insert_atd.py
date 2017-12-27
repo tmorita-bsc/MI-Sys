@@ -14,7 +14,7 @@ class AtdData(Resource):
             help="This field cannot be left blank!"
             )
 
-    @jwt_required()
+    #@jwt_required()
     def get(self, name):
         atd_info = self.find_by_name(name)
         if atd_info:
@@ -29,7 +29,7 @@ class AtdData(Resource):
         query = "SELECT * FROM {table} WHERE name=?".format(table=cls.TABLE_NAME)
         result = cursor.execute(query, (name,))
         row = result.fetchone()
-        connedtion.close()
+        connection.close()
 
         if row:
             return {'atd_info': { 'name': row[0], 'arrival_time': row[1], 'leave_time': row[2]}}
@@ -65,7 +65,7 @@ class AtdData(Resource):
         connedtion.commit()
         connedtion.close()
 
-    @jwt_required()
+    #@jwt_required()
     def put(self, name):
         atd_info = AtdData.parser.parse_args() 
         prev_atdinfo = self.find_by_name(name)
