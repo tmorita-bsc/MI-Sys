@@ -18,4 +18,4 @@ api.add_resource( AtdDataList, '/atdlist')
 api.add_resource( EmployeeRegister, '/employee_register')
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', debug=True)
+    app.run(debug=True)
