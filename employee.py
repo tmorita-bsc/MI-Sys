@@ -4,7 +4,6 @@
 import sqlite3
 from flask_restful import Resource, reqparse
 
-
 class Employee(Resource):
     TABLE_NAME = "employee_table"
 
