@@ -6,7 +6,7 @@ from flask_restful import Resource, reqparse
 
 
 class Employee(Resource):
-    TABLE_NAME = "employees"
+    TABLE_NAME = "employee_table"
 
     def __init__(self, e_id, e_name, e_password):
         self.e_id = e_id
@@ -15,7 +15,7 @@ class Employee(Resource):
 
     @classmethod
     def find_by_e_name(cls, e_name):
-        connection = sqlite3.connect('employee.db')
+        connection = sqlite3.connect('atd_info.db')
         cursor = connection.cursor()
         
         query = "SELECT * FROM {table} WHERE username=?".format(table=cls.TABLE_NAME)
@@ -31,7 +31,7 @@ class Employee(Resource):
 
     @classmethod
     def find_by_e_id(cls, e_id):
-        connection = sqlite3.connect('data.db')
+        connection = sqlite3.connect('atd_info.db')
         cursor = connection.cursor()
 
         query = "SELECT * FROM {table} WHERE id=?".format(table=cls.TABLE_NAME)
@@ -47,7 +47,7 @@ class Employee(Resource):
 
 
 class EmployeeRegister(Resource):
-    TABLE_NAME = "employees"
+    TABLE_NAME = "employee_table"
 
     parser = reqparse.RequestParser()
     parser.add_argument('e_name',
@@ -67,7 +67,7 @@ class EmployeeRegister(Resource):
         if Employee.find_by_e_name(employee['e_name']):
             return {"message": "Employee with that name already exists."}, 400
 
-        connection = sqlite3.connect('employee.db')
+        connection = sqlite3.connect('atd_info.db')
         cursor = connection.cursor()
 
         # self.TABLENAME is OK?
