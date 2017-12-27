@@ -1,4 +1,8 @@
 # MI-Sys
+## 残り仕事
+- バグ取り
+- UI作成
+
 ## tree 構成
 ```
 .
@@ -34,13 +38,18 @@
 $ pip install -r equirement.txt
 ```
 - DBはsqlite3 を利用
-  - 従業員登録のDB名は'employee.db'、TABLE名は'employees'
-  - 従業員勤怠情報のDB名は'atd.db'、TABLE名は'atd'
+  - 従業員登録のTABLE名は'employee_table'
+  - 従業員勤怠情報のTABLE名は'atd_table'
 - employee.py にて勤怠表のユーザ登録
 - insert_atddata.py にて勤怠表データ挿入
 
 ## DBテーブル情報
-以下を考えている
+現在は以下のよう  
+- 名前 name               string(text)
+- 出社時間 arrival_time   TIMESTAMP(hh-mm)
+- 退社時間 leave_time     TIMESTAMP(hh-mm)
+
+以下を考えている  
 - 名前 name               string
 - 年日 date               TIMESTAMP(yy-mm-dd)
 - 曜日 a_day_of_the_week  string
