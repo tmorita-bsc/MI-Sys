@@ -1,16 +1,19 @@
 
 from flask_restful import Resource, reqparse
 from flask_jwt import jwt_required
+
 import sqlite3
+
+from flask import request
 
 
 class AtdData(Resource):
     TABLE_NAME = 'atd_table'
 
     parser = reqparse.RequestParser()
-    parser.add_argument('name',
+    parser.add_argument('arrival_time',
             type=str,
-            required=True,
+            #required=True,
             help="This field cannot be left blank!"
             )
 
@@ -42,7 +45,8 @@ class AtdData(Resource):
             return {'message': "An atd_info with name '{}' already exist.".format(name)}
 
         # need help   this func can parse comand-line args
-        atd_info = AtdData.parser.parse_args()
+        atd_info = request.get_json()
+        # atd_info = AtdData.parser.parse_args()
 
         insert_atdinfo = {'name': name, 'arrival_time': atd_info['arrival_time'], \
                 'leave_time': atd_info['leave_time']}
@@ -67,7 +71,9 @@ class AtdData(Resource):
 
     #@jwt_required()
     def put(self, name):
-        atd_info = AtdData.parser.parse_args() 
+        atd_info = request.get_json()
+        print(atd_info)
+        #atd_info = AtdData.parser.parse_args() 
         prev_atdinfo = self.find_by_name(name)
         update_atdinfo = {'name': name, 'arrival_time': atd_info['arrival_time'], 'leave_time': atd_info['leave_time']}
 
