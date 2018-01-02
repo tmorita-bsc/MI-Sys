@@ -7,18 +7,18 @@ from flask_restful import Resource, reqparse
 class Employee(Resource):
     TABLE_NAME = "employee_table"
 
-    def __init__(self, e_id, e_name, e_password):
-        self.e_id = e_id
-        self.e_name = e_name
-        self.e_password = e_password
+    def __init__(self, _id, username, password):
+        self.id = _id
+        self.name = username
+        self.password = password
 
     @classmethod
-    def find_by_e_name(cls, e_name):
+    def find_by_username(cls, username):
         connection = sqlite3.connect('atd_info.db')
         cursor = connection.cursor()
         
         query = "SELECT * FROM {table} WHERE username=?".format(table=cls.TABLE_NAME)
-        result = cursor.execute(query, (e_name,))
+        result = cursor.execute(query, (username,))
         row = result.fetchone()
         if row:
             user = cls(*row)
@@ -29,12 +29,12 @@ class Employee(Resource):
         return user
 
     @classmethod
-    def find_by_e_id(cls, e_id):
+    def find_by_id(cls, _id):
         connection = sqlite3.connect('atd_info.db')
         cursor = connection.cursor()
 
         query = "SELECT * FROM {table} WHERE id=?".format(table=cls.TABLE_NAME)
-        result = cursor.execute(query, (e_id,))
+        result = cursor.execute(query, (_id,))
         row = result.fetchone()
         if row:
             user = cls(*row)
@@ -49,12 +49,12 @@ class EmployeeRegister(Resource):
     TABLE_NAME = "employee_table"
 
     parser = reqparse.RequestParser()
-    parser.add_argument('e_name',
+    parser.add_argument('username',
             type=str,
             required=True,
             help="This field cannnot be left blank!"
             )
-    parser.add_argument('e_password',
+    parser.add_argument('password',
             type=str,
             required=True,
             help="This field cannnot be left blank!"
@@ -63,7 +63,7 @@ class EmployeeRegister(Resource):
     def post(self):
         employee = EmployeeRegister.parser.parse_args()
 
-        if Employee.find_by_e_name(employee['e_name']):
+        if Employee.find_by_username(employee['username']):
             return {"message": "Employee with that name already exists."}, 400
 
         connection = sqlite3.connect('atd_info.db')
@@ -71,7 +71,7 @@ class EmployeeRegister(Resource):
 
         # self.TABLENAME is OK?
         query = "INSERT INTO {table} VALUES (NULL, ?, ?)".format(table=self.TABLE_NAME)
-        cursor.execute(query, (employee['e_name'], employee['e_password']))
+        cursor.execute(query, ( employee['username'], employee['password']))
 
         connection.commit()
         connection.close()
