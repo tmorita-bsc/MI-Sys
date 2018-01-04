@@ -44,6 +44,21 @@ class Employee(Resource):
         connection.close()
         return user
 
+    @classmethod
+    def find_max_id(cls):
+        connection = sqlite3.connect('atd_info.db')
+        cursor = connection.cursor()
+
+        query = "SELECT MAX(id) FROM {table}".format(table=cls.TABLE_NAME)
+        result = cursor.execute(query)
+        res = result.fetchone()[0]
+        if res:
+            max_id = res
+        else:
+            max_id = None
+
+        connection.close()
+        return max_id
 
 class EmployeeRegister(Resource):
     TABLE_NAME = "employee_table"
@@ -69,9 +84,10 @@ class EmployeeRegister(Resource):
         connection = sqlite3.connect('atd_info.db')
         cursor = connection.cursor()
 
-        # self.TABLENAME is OK?
-        query = "INSERT INTO {table} VALUES (NULL, ?, ?)".format(table=self.TABLE_NAME)
-        cursor.execute(query, ( employee['username'], employee['password']))
+        # find max id in employee_table
+        Employee.next_employee_id = Employee.find_max_id() + 1
+        query = "INSERT INTO {table} VALUES (?, ?, ?)".format(table=self.TABLE_NAME)
+        cursor.execute(query, ( Employee.next_employee_id, employee['username'], employee['password']))
 
         connection.commit()
         connection.close()

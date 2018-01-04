@@ -11,18 +11,13 @@ class AtdData(Resource):
     TABLE_NAME = 'atd_table'
 
     parser = reqparse.RequestParser()
-    parser.add_argument('arrival_time',
-            type=str,
-            required=True,
-            help="This field cannot be left blank!"
-            )
-    parser.add_argument('leave_time',
+    parser.add_argument('name',
             type=str,
             required=True,
             help="This field cannot be left blank!"
             )
 
-    #@jwt_required()
+    @jwt_required()
     def get(self, name):
         atd_info = self.find_by_name(name)
         if atd_info:
@@ -58,14 +53,12 @@ class AtdData(Resource):
         try:
             AtdData.insert(insert_atdinfo)
         except:
-            import traceback
-            traceback.print_exc()
             return {"message": "An error occurred inserting the atd_info."}
 
         return insert_atdinfo
     
     @classmethod
-    def insert(cls, insert_atdinfo):
+    def insert(cls, insert_atdinfo): # insert arrival_time
         connection = sqlite3.connect('atd_info.db')
         cursor = connection.cursor()
         
@@ -75,9 +68,9 @@ class AtdData(Resource):
         connection.commit()
         connection.close()
 
-    #@jwt_required()
-    def put(self, name):
-        #atd_info = request.get_json()
+    @jwt_required()
+    def put(self, name): # update leave_time
+        # need user name
         atd_info = AtdData.parser.parse_args() 
         prev_atdinfo = self.find_by_name(name)
         update_atdinfo = {'name': name, 'arrival_time': atd_info['arrival_time'], 'leave_time': atd_info['leave_time']}
@@ -101,8 +94,9 @@ class AtdData(Resource):
         connection = sqlite3.connect('atd_info.db')
         cursor = connection.cursor()
         
-        query = "UPDATE {table} SET arrival_time=? leave_time=? WHERE name=?".format(table=cls.TABLE_NAME)
-        cursor.execute( query, (atd_info['arrival_time'], atd_info['leave_time']))
+        #query = "UPDATE {table} SET arrival_time=? leave_time=? WHERE name=?".format(table=cls.TABLE_NAME)
+        query = "UPDATE {table} SET leave_time=? WHERE name=?".format(table=cls.TABLE_NAME)
+        cursor.execute( query, (atd_info['leave_time'], atd_info['name']))
 
         connection.commit()
         connection.close()

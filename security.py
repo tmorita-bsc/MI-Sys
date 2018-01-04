@@ -8,4 +8,5 @@ def authenticate( username, password):
 
 def identity(payload):
     emp_id = payload['identity']
+    print(emp_id)
     return Employee.find_by_id(emp_id)
