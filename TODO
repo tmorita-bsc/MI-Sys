@@ -1,0 +1,6 @@
+sqlite3 -> mysqlに
+  - 同時にSQLAlchemy(O/R mapper)で実装し直し
+
+手入力（jsonによるput）での、後から入力を可能にする
+
+UI の実装
