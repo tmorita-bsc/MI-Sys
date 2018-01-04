@@ -1,3 +1,6 @@
+現在、URIのnameとjsonのnameの不一致が許容されかっこ悪い
+  - すべて、URIからのみにする
+
 sqlite3 -> mysqlに
   - 同時にSQLAlchemy(O/R mapper)で実装し直し
 
