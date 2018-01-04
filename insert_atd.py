@@ -11,13 +11,18 @@ class AtdData(Resource):
     TABLE_NAME = 'atd_table'
 
     parser = reqparse.RequestParser()
-    parser.add_argument('name',
+    parser.add_argument('arrival_time',
+            type=str,
+            required=True,
+            help="This field cannot be left blank!"
+            )
+    parser.add_argument('leave_time',
             type=str,
             required=True,
             help="This field cannot be left blank!"
             )
 
-    @jwt_required()
+    #@jwt_required()
     def get(self, name):
         atd_info = self.find_by_name(name)
         if atd_info:
@@ -68,7 +73,21 @@ class AtdData(Resource):
         connection.commit()
         connection.close()
 
-    @jwt_required()
+    #@jwt_required()
+    def delete(self, name):
+        # not delete , just initialize
+        connection = sqlite3.connect('atd_info.db')
+        cursor = connection.cursor()
+        
+        query = "UPDATE {table} SET arrival_time=? WHERE name=?".format(table=self.TABLE_NAME)
+        cursor.execute( query, ("", name))
+        query = "UPDATE {table} SET leave_time=? WHERE name=?".format(table=self.TABLE_NAME)
+        cursor.execute( query, ("", name))
+
+        connection.commit()
+        connection.close()
+
+    #@jwt_required()
     def put(self, name): # update leave_time
         # need user name
         atd_info = AtdData.parser.parse_args() 
