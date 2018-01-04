@@ -4,6 +4,7 @@ from flask_jwt import JWT
 
 from security import authenticate, identity
 from employee import EmployeeRegister
+from bento import Bento, BentoList
 from insert_atd import AtdData, AtdDataList
 
 import pdb
@@ -16,6 +17,8 @@ jwt = JWT(app, authenticate, identity)
 
 api.add_resource( AtdData, '/atdinfo/<string:name>')
 api.add_resource( AtdDataList, '/atdlist')
+api.add_resource( Bento, '/bento/<string:name>')
+api.add_resource( BentoList, '/bentolist')
 api.add_resource( EmployeeRegister, '/employee_register')
 
 if __name__ == '__main__':

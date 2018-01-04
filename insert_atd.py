@@ -1,11 +1,9 @@
 
 from flask_restful import Resource, reqparse
 from flask_jwt import jwt_required
-
-import sqlite3
-
 from flask import request
 
+import sqlite3
 
 class AtdData(Resource):
     TABLE_NAME = 'atd_table'

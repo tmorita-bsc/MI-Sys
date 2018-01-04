@@ -11,5 +11,8 @@ cursor.execute(create_table)
 create_table = "CREATE TABLE IF NOT EXISTS atd_table (name text PRIMARY KEY, arrival_time  text, leave_time text)"
 cursor.execute(create_table)
 
+create_table = "CREATE TABLE IF NOT EXISTS bento_table (name text, order_bento_id text, o_mori text)"
+cursor.execute(create_table)
+
 connection.commit()
 connection.close()
