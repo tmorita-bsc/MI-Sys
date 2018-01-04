@@ -8,9 +8,8 @@ cursor = connection.cursor()
 create_table = "CREATE TABLE IF NOT EXISTS employee_table (id INTEGER KEY, username text, password text)"
 cursor.execute(create_table)
 
-create_table = "CREATE TABLE IF NOT EXISTS atd_table (name text PRIMARY KEY, arrival_time  TIMESTAMP, leave_time TIMESTAMP)"
+create_table = "CREATE TABLE IF NOT EXISTS atd_table (name text PRIMARY KEY, arrival_time  text, leave_time text)"
 cursor.execute(create_table)
-
 
 connection.commit()
 connection.close()

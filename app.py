@@ -6,9 +6,10 @@ from security import authenticate, identity
 from employee import EmployeeRegister
 from insert_atd import AtdData, AtdDataList
 
+import pdb
 
 app = Flask(__name__)
-app.security_key = 'jose'
+app.secret_key = 'jose'
 api = Api(app)
 
 jwt = JWT(app, authenticate, identity)
