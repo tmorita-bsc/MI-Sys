@@ -15,8 +15,10 @@ api = Api(app)
 
 jwt = JWT(app, authenticate, identity)
 
-api.add_resource( AtdData, '/atdinfo/<string:name>')
-api.add_resource( AtdDataList, '/atdlist')
+api.add_resource( AtdData, '/atdinfo/today/<string:name>')
+#api.add_resource( AtdData, '/atdinfo/<string:date>/<string:name>')
+api.add_resource( AtdDataList, '/atdlist/today')
+#api.add_resource( AtdDataList, '/atdlist/<string:date>')
 api.add_resource( Bento, '/bento/<string:name>')
 api.add_resource( BentoList, '/bentolist')
 api.add_resource( EmployeeRegister, '/employee_register')
